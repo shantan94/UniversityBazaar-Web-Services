@@ -4,17 +4,24 @@ const app=express();
 const bodyParser=require("body-parser");
 app.use(bodyParser.json());
 
+app.use(function (req,res,next) {
+    res.setHeader('Access-Control-Allow-Origin','*');
+    res.setHeader('Access-Control-Allow-Headers','Origin, X-Requested-With,Content-Type,Accept');
+    res.setHeader('Access-Control-Allow-Methods','POST,GET,PATCH,DELETE,OPTIONS');
+    next();
+});
+
 const connection=mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'root',
+    host:'testdb.c7ocfrrpeiwa.us-west-2.rds.amazonaws.com',
+    user:'test',
+    password:'testdb12',
     database:'uta'
 });
 
 connection.connect();
 
 app.get('/',function(req,res){
-    return res.send({ error: true, message: 'hello' });
+    return res.send({error:true,message:'hello'});
 });
 
 app.post('/users/login',(req,res)=>{

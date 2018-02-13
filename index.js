@@ -95,6 +95,19 @@ app.post('/users/forgot',function(req,res){
     });
 });
 
+app.post('/users/profile',function(req,res){
+    let userid=req.body.userid;
+    let query=`select * from users where userid=${userid}`;
+    connection.query(query,function(error,results,fields){
+        if(!results.length){
+            res.send({error:true,status:400,message:'No Profile'});
+            return;
+        }
+        let data=JSON.parse(JSON.stringify(results));
+        res.send({error:false,status:200,message:'Success',data:data[0]})
+    });
+});
+
 app.listen(process.env.PORT||8080, function(){
     console.log("Listening on 5000 port");
 });

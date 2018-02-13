@@ -12,7 +12,7 @@ this.sendMail=function(userid,email){
 	let mailOptions={
 		to:email,
 		subject:'Account Activation',
-		html:'Click on the link below to activate account:<br><a href="http://localhost:5000/users/verify/'+userid+'">Click Here</a>'
+		html:'Click on the link below to activate account:<br><a href="https://univbazaarservices.herokuapp.com/users/verify/'+userid+'">Click Here</a>'
 	};
 	transporter.sendMail(mailOptions,function(error,info){
 		if(error)

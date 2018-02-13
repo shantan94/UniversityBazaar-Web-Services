@@ -5,9 +5,12 @@ this.sendMail=function(userid,email){
 		host:'smtp-mail.outlook.com',
 		secureConnection:false,
 		port:587,
+		tls: {
+       		ciphers:'SSLv3'
+    	},
 		auth:{
 			user:'ubs_team2@outlook.com',
-			pass:'ubs_team2'
+			pass:'usb_team2'
 		}
 	});
 	let mailOptions={
@@ -30,9 +33,12 @@ this.sendPass=function(email,password){
 		host:'smtp-mail.outlook.com',
 		secureConnection:false,
 		port:587,
+		tls: {
+       		ciphers:'SSLv3'
+    	},
 		auth:{
 			user:'ubs_team2@outlook.com',
-			pass:'ubs_team2'
+			pass:'usb_team2'
 		}
 	});
 	let mailOptions={

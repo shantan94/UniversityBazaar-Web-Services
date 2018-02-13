@@ -2,11 +2,12 @@ const nodemailer=require('nodemailer');
 
 this.sendMail=function(userid,email){
 	let transporter=nodemailer.createTransport({
-		service:'gmail',
-		secure:true,
+		host:'smtp-mail.outlook.com',
+		secureConnection:false,
+		port:587,
 		auth:{
-			user:'hotelh630@gmail.com',
-			pass:'hoteladmin'
+			user:'ubs_team2@outlook.com',
+			pass:'ubs_team2'
 		}
 	});
 	let mailOptions={
@@ -26,11 +27,12 @@ this.sendMail=function(userid,email){
 
 this.sendPass=function(email,password){
 	let transporter=nodemailer.createTransport({
-		service:'gmail',
-		secure:true,
+		host:'smtp-mail.outlook.com',
+		secureConnection:false,
+		port:587,
 		auth:{
-			user:'hotelh630@gmail.com',
-			pass:'hoteladmin'
+			user:'ubs_team2@outlook.com',
+			pass:'ubs_team2'
 		}
 	});
 	let mailOptions={

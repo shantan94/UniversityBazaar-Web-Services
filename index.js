@@ -104,7 +104,7 @@ app.post('/users/profile',function(req,res){
             return;
         }
         let data=JSON.parse(JSON.stringify(results));
-        res.send({error:false,status:200,message:'Success',data:data[0]})
+        res.send({error:false,status:200,message:'Success',data:data[0]});
     });
 });
 

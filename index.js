@@ -72,7 +72,7 @@ app.post('/users/register',function(req,res){
     let query=`insert into users values(${userid},'${name}',${age},'${gender}','${email}','${password}',${phone},false)`;
     connection.query(query,function(error,results,fields){
         if(error){
-            res.send({error:true,status:400,message:'Username Already Exists'});
+            res.send({error:true,status:400,message:'Username or Email Already Exists'});
             return;
         }
         res.send({error:false,status:200,data:results,message:'Insert Successful'});
@@ -107,6 +107,46 @@ app.post('/users/profile',function(req,res){
         res.send({error:false,status:200,message:'Success',data:data[0]});
     });
 });
+
+app.post('/users/message',function(req,res){
+    let query=`select * from messages`;
+    connection.query(query,function(error,results,fields){
+        if(error){
+            res.send({error:true,status:400,message:'No messages'});
+            return;
+        }
+        let data=JSON.parse(JSON.stringify(results));
+        res.send({error:false,status:200,message:'Success',data:data});
+    });
+});
+
+app.post('/users/message/insert',function(req,res){
+    let userid=req.body.userid;
+    let message=req.body.message;
+    let date=req.body.date;
+    let query=`insert into messages values('${userid}','${message}','${date}')`;
+    connection.query(query,function(error,results,fields){
+        if(error){
+            res.send({error:true,status:400,message:'Failed'});
+            return;
+        }
+        res.send({error:false,status:200,message:'Success'});
+    });
+});
+
+app.post('/users/message/instant',function(req,res){
+    let date=req.body.date;
+    let query=`select * from messages where time>'${date}'`;
+    connection.query(query,function(error,results,fields){
+        if(results===undefined||!results.length){
+            res.send({error:true,status:400,message:'No messages'});
+            return;
+        }
+        let data=JSON.parse(JSON.stringify(results));
+        res.send({error:false,status:200,message:'Success',data:data});
+    });
+});
+
 
 app.listen(process.env.PORT||8080, function(){
     console.log("Listening on 5000 port");

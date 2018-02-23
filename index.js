@@ -154,9 +154,10 @@ app.post('/users/items',function(req,res){
     let image=req.body.image;
     let type=req.body.type;
     let price=req.body.price;
-    let query=`insert into items values('${userid}','${itemname}','${description}',${image},'${type}','${price}')`;
+    let query=`insert into items values('${userid}','${itemname}','${description}','${image}','${type}','${price}')`;
     connection.query(query,function(error,results,fields){
         if(error){
+            console.log(error);
             res.send({error:true,status:400,message:'Failed'});
             return;
         }

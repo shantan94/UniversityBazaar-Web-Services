@@ -147,6 +147,22 @@ app.post('/users/message/instant',function(req,res){
     });
 });
 
+app.post('users/items',function(req,res){
+    let userid=req.body.userid;
+    let itemname=req.body.itemname;
+    let description=req.body.description;
+    let image=req.body.image;
+    let type=req.body.type;
+    let price=req.body.price;
+    let query=`insert into items values('${userid}','${items}','${description}',${image},'${type}','${price}')`;
+    connection.query(query,function(error,results,fields){
+        if(error){
+            res.send({error:true,status:400,message:'Failed'});
+            return;
+        }
+        res.send({error:false,status:200,message:'Success'});
+    });
+});
 
 app.listen(process.env.PORT||8080, function(){
     console.log("Listening on 5000 port");

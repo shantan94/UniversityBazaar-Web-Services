@@ -147,7 +147,7 @@ app.post('/users/message/instant',function(req,res){
     });
 });
 
-app.post('users/items',function(req,res){
+app.post('/users/items',function(req,res){
     let userid=req.body.userid;
     let itemname=req.body.itemname;
     let description=req.body.description;

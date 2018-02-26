@@ -175,3 +175,5 @@ app.post('/users/getitems',function(req,res){
 app.listen(process.env.PORT||8080, function(){
     console.log("Listening on 5000 port");
 });
+
+connection.end();

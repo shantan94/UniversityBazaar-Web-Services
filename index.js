@@ -13,15 +13,32 @@ app.use(function (req,res,next) {
     next();
 });
 
-const connection=mysql.createConnection({
+let connection;
+
+function handleDisconnect() {
+  connection=mysql.createConnection({
     host:'testdb.c7ocfrrpeiwa.us-west-2.rds.amazonaws.com',
     user:'test',
     password:'testdb12',
-    database:'uta',
-    connectTimeout:1000000
-});
+    database:'uta'
+  });
+  connection.connect(function(err) {
+    if(err) {
+      console.log('error when connecting to db:', err);
+      setTimeout(handleDisconnect, 2000);
+    }
+  });
 
-connection.connect();
+  connection.on('error', function(err) {
+    console.log('db error', err);
+    if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+}
+handleDisconnect();
 
 app.get('/',function(req,res){
     res.send({error:true,message:'hello'});

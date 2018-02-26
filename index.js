@@ -173,10 +173,11 @@ app.post('/users/items',function(req,res){
     let query=`insert into items values('${userid}','${itemname}','${description}','${imageid}','${type}','${price}')`;
     connection.query(query,function(error,results,fields){
         if(error){
+            console.log(error);
             return res.send({error:true,status:400,message:'Failed'});
         }
         res.send({error:false,status:200,message:'Success'});
-        
+        s3upload.upload(imageid,image);
     });
 });
 
@@ -185,7 +186,6 @@ app.post('/users/getitems',function(req,res){
     let query=`select * from items where type='${type}'`;
     connection.query(query,function(error,results,fields){
         if(error){
-            console.log(error);
             return res.send({error:true,status:400,message:'Failed'});
         }
         let data=JSON.parse(JSON.stringify(results));

@@ -58,7 +58,6 @@ app.put('/users/register',function(req,res){
     connection.query(query,function(error,results,fields){
         if(error){
             res.send({error:true,status:400,message:'Bad Request'});
-            res.close();
         }
         res.send({error:false,status:200,message:'Profile Updated'});
     });
@@ -75,9 +74,7 @@ app.post('/users/register',function(req,res){
     let query=`insert into users values(${userid},'${name}',${age},'${gender}','${email}','${password}',${phone},false)`;
     connection.query(query,function(error,results,fields){
         if(error){
-            res.send({error:true,status:400,message:'Username or Email Already Exists'});
-            res.close();
-            return;
+            return res.send({error:true,status:400,message:'Username or Email Already Exists'});
         }
         res.send({error:false,status:200,data:results,message:'Insert Successful'});
         mailer.sendMail(userid,email);
@@ -89,9 +86,7 @@ app.post('/users/forgot',function(req,res){
     let query=`select password from users where email='${email}'`;
     connection.query(query,function(error,results,fields){
         if(!results.length){
-            res.send({error:true,status:400,message:'No such email exists'});
-            res.close();
-            return;
+            return res.send({error:true,status:400,message:'No such email exists'});
         }
         let data=JSON.parse(JSON.stringify(results));
         let decryption=encrypter.decrypt(data[0].password);
@@ -105,9 +100,7 @@ app.post('/users/profile',function(req,res){
     let query=`select * from users where userid=${userid}`;
     connection.query(query,function(error,results,fields){
         if(!results.length){
-            res.send({error:true,status:400,message:'No Profile'});
-            res.close();
-            return;
+            return res.send({error:true,status:400,message:'No Profile'});
         }
         let data=JSON.parse(JSON.stringify(results));
         res.send({error:false,status:200,message:'Success',data:data[0]});
@@ -118,9 +111,7 @@ app.post('/users/message',function(req,res){
     let query=`select * from messages`;
     connection.query(query,function(error,results,fields){
         if(error){
-            res.send({error:true,status:400,message:'No messages'});
-            res.close();
-            return;
+            return res.send({error:true,status:400,message:'No messages'});
         }
         let data=JSON.parse(JSON.stringify(results));
         res.send({error:false,status:200,message:'Success',data:data});
@@ -134,9 +125,7 @@ app.post('/users/message/insert',function(req,res){
     let query=`insert into messages values('${userid}','${message}','${date}')`;
     connection.query(query,function(error,results,fields){
         if(error){
-            res.send({error:true,status:400,message:'Failed'});
-            res.close();
-            return;
+            return res.send({error:true,status:400,message:'Failed'});
         }
         res.send({error:false,status:200,message:'Success'});
     });
@@ -147,9 +136,7 @@ app.post('/users/message/instant',function(req,res){
     let query=`select * from messages where time>'${date}'`;
     connection.query(query,function(error,results,fields){
         if(results===undefined||!results.length){
-            res.send({error:true,status:400,message:'No messages'});
-            res.close();
-            return;
+            return res.send({error:true,status:400,message:'No messages'});
         }
         let data=JSON.parse(JSON.stringify(results));
         res.send({error:false,status:200,message:'Success',data:data});
@@ -166,9 +153,7 @@ app.post('/users/items',function(req,res){
     let query=`insert into items values('${userid}','${itemname}','${description}','${image}','${type}','${price}')`;
     connection.query(query,function(error,results,fields){
         if(error){
-            res.send({error:true,status:400,message:'Failed'});
-            res.close();
-            return;
+            return res.send({error:true,status:400,message:'Failed'});
         }
         res.send({error:false,status:200,message:'Success'});
     });
@@ -179,9 +164,7 @@ app.post('/users/getitems',function(req,res){
     let query=`select * from items where type='${type}'`;
     connection.query(query,function(error,results,fields){
         if(error){
-            res.send({error:true,status:400,message:'Failed'});
-            res.close();
-            return;
+            return res.send({error:true,status:400,message:'Failed'});
         }
         let data=JSON.parse(JSON.stringify(results));
         res.send({error:false,status:200,message:'Success',data:data});

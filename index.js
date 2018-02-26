@@ -169,7 +169,7 @@ app.post('/users/items',function(req,res){
     let image=req.body.image;
     let type=req.body.type;
     let price=req.body.price;
-    let imageid=uuidv1;
+    let imageid=uuidv1();
     let query=`insert into items values('${userid}','${itemname}','${description}','${imageid}','${type}','${price}')`;
     connection.query(query,function(error,results,fields){
         if(error){

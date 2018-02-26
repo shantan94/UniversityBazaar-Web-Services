@@ -17,7 +17,8 @@ const connection=mysql.createConnection({
     host:'testdb.c7ocfrrpeiwa.us-west-2.rds.amazonaws.com',
     user:'test',
     password:'testdb12',
-    database:'uta'
+    database:'uta',
+    connectTimeout:10000
 });
 
 connection.connect();
@@ -164,8 +165,7 @@ app.post('/users/getitems',function(req,res){
     let query=`select * from items where type='${type}'`;
     connection.query(query,function(error,results,fields){
         if(error){
-            res.send({error:true,status:400,message:'Failed'});
-            return;
+            return res.send({error:true,status:400,message:'Failed'});
         }
         let data=JSON.parse(JSON.stringify(results));
         res.send({error:false,status:200,message:'Success',data:data});

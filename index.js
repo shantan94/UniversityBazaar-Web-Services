@@ -18,7 +18,7 @@ const connection=mysql.createConnection({
     user:'test',
     password:'testdb12',
     database:'uta',
-    acquireTimeout:1000000
+    connectTimeout:1000000
 });
 
 connection.connect();

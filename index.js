@@ -164,19 +164,19 @@ app.post('/users/message/instant',function(req,res){
 
 app.post('/users/items',function(req,res){
     let userid=req.body.userid;
-    console.log("here1");
+    // console.log("here1");
     let itemname=req.body.itemname;
-    console.log("here2");
+    // console.log("here2");
     let description=req.body.description;
-    console.log("here3");
+    // console.log("here3");
     let image=req.body.image;
-    console.log("here4");
+    // console.log("here4");
     let type=req.body.type;
-    console.log("here5");
+    // console.log("here5");
     let price=req.body.price;
-    console.log("here6");
+    // console.log("here6");
     let imageid=uuidv1;
-    console.log("here7");
+    // console.log("here7");
     let query=`insert into items values('${userid}','${itemname}','${description}','${imageid}','${type}','${price}')`;
     connection.query(query,function(error,results,fields){
         if(error){

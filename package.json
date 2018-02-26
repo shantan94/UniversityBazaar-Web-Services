@@ -10,10 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.202.0",
     "body-parser": "^1.18.2",
     "crypto": "^1.0.1",
     "express": "^4.16.2",
     "mysql": "^2.15.0",
-    "nodemailer": "^4.4.2"
+    "nodemailer": "^4.4.2",
+    "uuid": "^3.2.1"
   }
 }

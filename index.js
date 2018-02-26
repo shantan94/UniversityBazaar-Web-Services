@@ -4,6 +4,8 @@ const app=express();
 const bodyParser=require("body-parser");
 const mailer=require("./nodemail.js");
 const encrypter=require("./encrypter.js");
+const s3upload=require("./s3upload.js");
+const uuidv1=require("uuid/v1");
 app.use(bodyParser.json({limit:'50mb'}));
 
 app.use(function (req,res,next) {
@@ -24,16 +26,15 @@ function handleDisconnect() {
   });
   connection.connect(function(err) {
     if(err) {
-      console.log('error when connecting to db:', err);
-      setTimeout(handleDisconnect, 2000);
+      console.log('error when connecting to db:',err);
+      setTimeout(handleDisconnect,2000);
     }
   });
-
   connection.on('error', function(err) {
     console.log('db error', err);
-    if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+    if(err.code==='PROTOCOL_CONNECTION_LOST') {
       handleDisconnect();
-    } else {
+    }else{
       throw err;
     }
   });
@@ -168,12 +169,14 @@ app.post('/users/items',function(req,res){
     let image=req.body.image;
     let type=req.body.type;
     let price=req.body.price;
-    let query=`insert into items values('${userid}','${itemname}','${description}','${image}','${type}','${price}')`;
+    let imageid=uuidv1;
+    let query=`insert into items values('${userid}','${itemname}','${description}','${imageid}','${type}','${price}')`;
     connection.query(query,function(error,results,fields){
         if(error){
             return res.send({error:true,status:400,message:'Failed'});
         }
         res.send({error:false,status:200,message:'Success'});
+        s3upload.upload(imageid,image);
     });
 });
 

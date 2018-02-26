@@ -164,6 +164,7 @@ app.post('/users/getitems',function(req,res){
     let query=`select * from items where type='${type}'`;
     connection.query(query,function(error,results,fields){
         if(error){
+            console.log(error);
             return res.send({error:true,status:400,message:'Failed'});
         }
         let data=JSON.parse(JSON.stringify(results));

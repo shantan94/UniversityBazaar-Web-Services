@@ -166,12 +166,25 @@ app.post('/users/items',function(req,res){
     let query=`insert into items values('${userid}','${itemname}','${description}','${image}','${type}','${price}')`;
     connection.query(query,function(error,results,fields){
         if(error){
-            console.log(error);
             res.send({error:true,status:400,message:'Failed'});
             res.close();
             return;
         }
         res.send({error:false,status:200,message:'Success'});
+    });
+});
+
+app.post('/users/getitems',function(req,res){
+    let type=req.body.type;
+    let query=`select * from items where type='${type}'`;
+    connection.query(query,function(error,results,fields){
+        if(error){
+            res.send({error:true,status:400,message:'Failed'});
+            res.close();
+            return;
+        }
+        let data=JSON.parse(JSON.stringify(results));
+        res.send({error:false,status:200,message:'Success',data:data});
     });
 });
 

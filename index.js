@@ -17,7 +17,8 @@ const connection=mysql.createConnection({
     host:'testdb.c7ocfrrpeiwa.us-west-2.rds.amazonaws.com',
     user:'test',
     password:'testdb12',
-    database:'uta'
+    database:'uta',
+    acquireTimeout:1000000
 });
 
 connection.connect();

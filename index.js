@@ -4,7 +4,7 @@ const app=express();
 const bodyParser=require("body-parser");
 const mailer=require("./nodemail.js");
 const encrypter=require("./encrypter.js");
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit:'50mb'}));
 
 app.use(function (req,res,next) {
     res.setHeader('Access-Control-Allow-Origin','*');

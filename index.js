@@ -176,7 +176,7 @@ app.post('/users/items',function(req,res){
             return res.send({error:true,status:400,message:'Failed'});
         }
         res.send({error:false,status:200,message:'Success'});
-        s3upload.upload(imageid,image);
+        // s3upload.upload(imageid,image);
     });
 });
 

@@ -82,6 +82,18 @@ app.put('/users/register',function(req,res){
     });
 });
 
+app.put('/users/reset',function(req,res){
+    let userid=req.body.userid;
+    let password=encrypter.encrypt(req.body.password);
+    let query=`update users set password='${password}' where userid='${userid}'`;
+    connection.query(query,function(error,results,fields){
+        if(error)
+            res.send({error:true,status:400,message:'Bad Request'});
+        else
+            res.send({error:false,status:200,message:'Password Updated'});
+    })
+});
+
 app.post('/users/register',function(req,res){
     let userid=req.body.userid;
     let name=req.body.name;
@@ -184,6 +196,19 @@ app.post('/users/items',function(req,res){
 app.post('/users/getitems',function(req,res){
     let type=req.body.type;
     let query=`select * from items where type='${type}'`;
+    connection.query(query,function(error,results,fields){
+        if(error){
+            return res.send({error:true,status:400,message:'Failed'});
+        }
+        let data=JSON.parse(JSON.stringify(results));
+        res.send({error:false,status:200,message:'Success',data:data});
+    });
+});
+
+app.post('/users/getmyitems',function(req,res){
+    let type=req.body.type;
+    let userid=req.body.userid;
+    let query=`select * from items where type='${type}' and userid='${userid}'`;
     connection.query(query,function(error,results,fields){
         if(error){
             return res.send({error:true,status:400,message:'Failed'});

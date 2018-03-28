@@ -224,7 +224,7 @@ app.post('/users/setnegotiate',function(req,res) {
     let to=req.body.to;
     let imageid=req.body.imageid;
     let date=req.body.date;
-    let query=`insert into negotiations values('${from}','${to}','${imageid}','${message}','${time}')`;
+    let query=`insert into negotiations values('${from}','${to}','${imageid}','${message}','${date}')`;
     connection.query(query,function(error,results) {
         if(error){
             return res.send({error:true,status:400,message:'Failed'});

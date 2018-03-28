@@ -87,7 +87,7 @@ app.put('/users/reset',function(req,res){
     let password=encrypter.encrypt(req.body.password);
     let query=`update users set password='${password}' where userid='${userid}'`;
     connection.query(query,function(error,results,fields){
-        if(error)
+        if(results.affectedRows===0)
             res.send({error:true,status:400,message:'Bad Request'});
         else
             res.send({error:false,status:200,message:'Password Updated'});

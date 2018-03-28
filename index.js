@@ -19,7 +19,7 @@ let connection;
 
 function handleDisconnect() {
   connection=mysql.createConnection({
-    host:'testdb.c7ocfrrpeiwa.us-west-2.rds.amazonaws.com',
+    host:'testdb.cm2m0z3vohfz.us-east-2.rds.amazonaws.com',
     user:'test',
     password:'testdb12',
     database:'uta'

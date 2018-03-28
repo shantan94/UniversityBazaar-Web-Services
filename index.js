@@ -218,6 +218,21 @@ app.post('/users/getmyitems',function(req,res){
     });
 });
 
+app.post('/users/setnegotiate',function(req,res) {
+    let message=req.body.message;
+    let from=req.body.from;
+    let to=req.body.to;
+    let imageid=req.body.imageid;
+    let date=req.body.date;
+    let query=`insert into negotiations values('${from}','${to}','${imageid}','${message}','${time}')`;
+    connection.query(query,function(error,results) {
+        if(error){
+            return res.send({error:true,status:400,message:'Failed'});
+        }
+        res.send({error:false,status:200,message:'Success'});
+    })
+});
+
 app.listen(process.env.PORT||8080, function(){
     console.log("Listening on 5000 port");
 });

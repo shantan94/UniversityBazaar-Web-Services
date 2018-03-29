@@ -185,7 +185,6 @@ app.post('/users/items',function(req,res){
     let query=`insert into items values('${userid}','${itemname}','${description}','${imageid}','${type}','${price}')`;
     connection.query(query,function(error,results,fields){
         if(error){
-            console.log(error);
             return res.send({error:true,status:400,message:'Failed'});
         }
         res.send({error:false,status:200,message:'Success'});

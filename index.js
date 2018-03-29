@@ -233,6 +233,43 @@ app.post('/users/setnegotiate',function(req,res) {
     })
 });
 
+app.post('/users/getnegotiate',function(req,res) {
+    let to=req.body.to;
+    let from=req.body.from;
+    let imageid=req.body.imageid;
+    query="select * from negotiations where (`to`=? and `from`=?) or (`to`=? and `from`=?) and imageid=?";
+    connection.query(query,[to,from,from,to,imageid],function(error,results) {
+        if(error){
+            console.log(error);
+            return res.send({error:true,status:400,message:'Bad Request'});
+        }
+        let data=JSON.parse(JSON.stringify(results));
+        res.send({error:false,status:200,message:'Success',data:data});
+    })
+})
+
+app.post('/users/clubs',function(req,res) {
+    let name=req.body.name;
+    let description=req.body.description;
+    let userid=req.body.userid;
+    let query=`insert into clubs values('${name}','${description}','${userid}')`;
+    connection.query(query,function(error,results) {
+        if(error)
+            return res.send({error:true,status:400,message:'Club name already exists'});
+        res.send({error:false,status:200,message:'Club created'});
+    })
+});
+
+app.post('/users/getclubs',function(req,res) {
+    let query=`select * from clubs`;
+    connection.query(query,function(error,results) {
+        if(error)
+            return res.send({error:true,status:400,message:'Bad Request'});
+        let data=JSON.parse(JSON.stringify(results));
+        res.send({error:false,status:200,message:'Success',data:data});
+    })
+});
+
 app.listen(process.env.PORT||8080, function(){
     console.log("Listening on 5000 port");
 });

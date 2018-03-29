@@ -237,7 +237,7 @@ app.post('/users/getnegotiate',function(req,res) {
     let to=req.body.to;
     let from=req.body.from;
     let imageid=req.body.imageid;
-    query="select * from negotiations where (`to`=? and `from`=?) or (`to`=? and `from`=?) and imageid=?";
+    query="select * from negotiations where ((`to`=? and `from`=?) or (`to`=? and `from`=?)) and imageid=?";
     connection.query(query,[to,from,from,to,imageid],function(error,results) {
         if(error){
             console.log(error);

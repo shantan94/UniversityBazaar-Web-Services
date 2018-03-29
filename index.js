@@ -245,7 +245,19 @@ app.post('/users/getnegotiate',function(req,res) {
         let data=JSON.parse(JSON.stringify(results));
         res.send({error:false,status:200,message:'Success',data:data});
     })
-})
+});
+
+app.post('/users/getmyusernegotiate',function(req,res) {
+    let userid=req.body.userid;
+    let imageid=req.body.imageid;
+    query="select distinct(`from`) from negotiations where imageid=? and `from`<>?" ;
+    connection.query(query,[imageid,userid],function(error,results) {
+        if(error)
+            return res.send({error:true,status:400,message:'Bad Request'});
+        let data=JSON.parse(JSON.stringify(results));
+        res.send({error:false,status:200,message:'Success',data:data});
+    })
+});
 
 app.post('/users/clubs',function(req,res) {
     let name=req.body.name;

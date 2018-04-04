@@ -1,5 +1,5 @@
 const AWS=require('aws-sdk');
-AWS.config.update({accessKeyId:"AKIAJIRY6BY6PRZNSVBA",secretAccessKey:"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"});
+AWS.config.update({accessKeyId:"AKIAI3WBQQMY6MVBWF3A",secretAccessKey:"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"});
 const s3=new AWS.S3();
 
 this.upload=function(imageid,image){
